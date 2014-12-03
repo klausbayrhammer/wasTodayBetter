@@ -1,0 +1,11 @@
+{
+  "name": "wastodaybetter",
+  "version": "1.0.0",
+  "description": "was today better than yesterday",
+  "author": "Klaus Bayrhammer <bayrhammer.klaus@gmail.com>",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "body-parser": "^1.9.3",
+    "loki.js": "~1.0.2"
+  }
+}

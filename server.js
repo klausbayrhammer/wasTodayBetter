@@ -1,14 +1,12 @@
 var http = require('http');
-var loki = require('lokijs');
+var express = require('express');
+var routes = require('./routes');
 
-var db = new loki('todayBetter.json');
-var todayBetter = db.addCollection('todayBetter');
+var app = express();
 
-http.createServer(function (req, res) {
-    todayBetter.insert({type:'TDD', value:true});
+app.get('/today', routes.today);
+app.post('/today', routes.addToday);
 
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    console.log(todayBetter.find({type:'TDD'}));
-}).listen(1337, '127.0.0.1');
-
-console.log('Server running at http://127.0.0.1:1337/');
+http.createServer(app).listen(1337, function(){
+    console.log("Express server listening on port " + 1337);
+});
