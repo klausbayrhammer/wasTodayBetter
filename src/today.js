@@ -1,30 +1,32 @@
 "use strict";
-var mongo = require('./mongo');
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://wastodaybetter:secret@ds039351.mongolab.com:39351/wastodaybetter');
+
+var TodayEntrySchema = new mongoose.Schema({
+    date: { type: Date, default: getTodayWithoutTime},
+    type: String,
+    value: String
+});
+
+var TodayEntry = mongoose.model('TodayEnrty', TodayEntrySchema);
 
 exports.today = function (req, res) {
     console.log('calling day');
-    var todayWithoutTime = getTodayWithoutTime();
-    // Use connect method to connect to the Server
-    mongo.exec(function(err, db) {
-        var collection = db.collection('days');
-        collection.find({date:todayWithoutTime}, function(err, data) {
-            if(err)
-                console.log(err);
-            res.send(data);
-            db.close();
-        });
+    TodayEntry.find({date:getTodayWithoutTime()}, function(err, entry) {
+        res.send(entry);
     });
 };
 
 exports.addToday = function (req, res) {
     console.log('adding day');
-    var todayWithoutTime = getTodayWithoutTime();
-
-    // Use connect method to connect to the Server
-    mongo.exec(function(err, db) {
-        var collection = db.collection('days');
-        collection.insert({type:req.params.type, date: todayWithoutTime, value:req.params.val});
-        db.close();
+    TodayEntry.findOne({type:req.params.type, date:getTodayWithoutTime()}, function(err, entry) {
+        if(entry) {
+            entry.value=req.params.val;
+            entry.save();
+        } else {
+            var todayEntry = new TodayEntry({type:req.params.type, value:req.params.val});
+            todayEntry.save();
+        }
     });
     res.end();
 };

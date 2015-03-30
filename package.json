@@ -4,8 +4,9 @@
   "description": "was today better than yesterday",
   "author": "Klaus Bayrhammer <bayrhammer.klaus@gmail.com>",
   "license": "BSD-3-Clause",
+  "scripts": {"start": "node src/server.js"},
   "dependencies": {
     "restify": "3.0.1",
-    "mongodb": "~2.0"
+    "mongoose": "4.0.1"
   }
 }
