@@ -5,7 +5,7 @@
   "author": "Klaus Bayrhammer <bayrhammer.klaus@gmail.com>",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "body-parser": "^1.9.3",
-    "loki.js": "~1.0.2"
+    "restify": "3.0.1",
+    "mongodb": "~2.0"
   }
 }
